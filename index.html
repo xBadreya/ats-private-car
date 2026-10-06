@@ -1,198 +1,384 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0,
-        maximum-scale=1.0, user-scalable=no">
 
-  <title>ATS Ajman - Private Car Exit</title>
+<meta charset="UTF-8">
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
-  <style>
-    * { box-sizing: border-box; }
+<title>ATS Ajman - Private Car Exit</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #061a2d;
-      color: white;
-      text-align: center;
-    }
+<script src="https://unpkg.com/html5-qrcode"></script>
 
-    #home {
-      min-height: 100vh;
-      padding: 25px;
-    }
+<style>
 
-    h1 {
-      font-size: 38px;
-      margin: 15px 0 5px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .subtitle {
-      font-size: 21px;
-      margin-bottom: 20px;
-    }
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #061a2d;
+  color: white;
+}
 
-    .gate {
-      margin: 15px;
-      font-size: 20px;
-    }
+body {
+  text-align: center;
+}
 
-    select {
-      font-size: 20px;
-      padding: 10px;
-      border-radius: 10px;
-    }
+#home {
+  min-height: 100vh;
+  padding: 15px;
+}
 
-    #reader {
-      max-width: 650px;
-      margin: 20px auto;
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-    }
+.title {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  margin-top: 8px;
+}
 
-    #startButton {
-      background: #1687ff;
-      color: white;
-      border: none;
-      padding: 16px 30px;
-      border-radius: 14px;
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px;
-    }
+.subtitle {
+  font-size: 20px;
+  margin: 5px 0 12px;
+}
 
-    #message {
-      font-size: 18px;
-      margin: 15px;
-    }
+.gateArea {
+  font-size: 18px;
+  margin: 8px;
+}
 
-    #manualArea {
-      margin-top: 20px;
-    }
+select {
+  font-size: 18px;
+  padding: 8px 15px;
+  border: 0;
+  border-radius: 10px;
+}
 
-    input {
-      font-size: 21px;
-      padding: 14px;
-      width: 250px;
-      border-radius: 12px;
-      border: none;
-      text-align: center;
-    }
 
-    .check {
-      font-size: 20px;
-      padding: 14px 20px;
-      border: none;
-      border-radius: 12px;
-      margin-left: 5px;
-      font-weight: bold;
-    }
+/* CAMERA */
 
-    /* RESULT */
+#cameraContainer {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  margin: 10px auto;
+}
 
-    #result {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
+#reader {
+  width: 100%;
+  min-height: 350px;
+  background: #000;
+  border-radius: 18px;
+  overflow: hidden;
+}
 
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+#reader video {
+  object-fit: cover !important;
+}
 
-      padding: 25px;
-    }
 
-    .allowed { background: #07843b; }
-    .bus { background: #c71919; }
-    .duplicate { background: #e48100; }
-    .unknown { background: #333; }
+/* START */
 
-    #photo {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 20px;
-      border: 7px solid white;
-      display: none;
-      margin-bottom: 15px;
-    }
+#startButton {
+  padding: 15px 30px;
+  margin: 15px;
 
-    #resultTitle {
-      font-size: 48px;
-      font-weight: 900;
-    }
+  font-size: 21px;
+  font-weight: bold;
 
-    #studentName {
-      font-size: 34px;
-      font-weight: bold;
-      margin: 12px;
-    }
+  border: 0;
+  border-radius: 14px;
 
-    #details {
-      font-size: 23px;
-      line-height: 1.6;
-    }
+  background: #1687ff;
+  color: white;
+}
 
-    .status {
-      font-size: 32px;
-      font-weight: 900;
-      margin-top: 15px;
-    }
 
-    #next {
-      margin-top: 25px;
-      padding: 15px 30px;
-      font-size: 21px;
-      font-weight: bold;
-      border: none;
-      border-radius: 14px;
-    }
-  </style>
+/* STATUS */
+
+#message {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 8px;
+  min-height: 22px;
+}
+
+
+/* MANUAL */
+
+#manualArea {
+  margin-top: 12px;
+}
+
+#studentID {
+  width: 240px;
+  padding: 12px;
+
+  font-size: 20px;
+
+  border: 0;
+  border-radius: 11px;
+
+  text-align: center;
+}
+
+#checkButton {
+  padding: 12px 18px;
+
+  font-size: 19px;
+  font-weight: bold;
+
+  border: 0;
+  border-radius: 11px;
+
+  margin-left: 4px;
+}
+
+
+/* ========================================
+   RESULT
+======================================== */
+
+#result {
+
+  display: none;
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 99999;
+
+  width: 100vw;
+  height: 100vh;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+
+.allowed {
+  background: #07843b;
+}
+
+.bus {
+  background: #c71919;
+}
+
+.duplicate {
+  background: #e48100;
+}
+
+.unknown {
+  background: #333333;
+}
+
+
+/* PHOTO */
+
+#photo {
+
+  width: 210px;
+  height: 210px;
+
+  object-fit: cover;
+
+  border-radius: 20px;
+
+  border: 6px solid white;
+
+  background: white;
+
+  display: none;
+
+  margin-bottom: 10px;
+}
+
+
+/* RESULT TEXT */
+
+#resultTitle {
+
+  font-size: 48px;
+
+  font-weight: 900;
+
+  margin: 5px;
+}
+
+
+#studentName {
+
+  font-size: 34px;
+
+  font-weight: 800;
+
+  margin: 7px;
+}
+
+
+#details {
+
+  font-size: 22px;
+
+  line-height: 1.45;
+}
+
+
+.bigStatus {
+
+  font-size: 31px;
+
+  font-weight: 900;
+
+  margin-top: 10px;
+}
+
+
+#nextButton {
+
+  margin-top: 17px;
+
+  padding: 13px 30px;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  border: 0;
+
+  border-radius: 13px;
+
+  background: white;
+
+  color: #111;
+}
+
+
+#countdown {
+
+  margin-top: 8px;
+
+  font-size: 16px;
+}
+
+
+/* iPad */
+
+@media(max-width:800px) {
+
+  .title {
+    font-size: 32px;
+  }
+
+  #resultTitle {
+    font-size: 42px;
+  }
+
+  #studentName {
+    font-size: 30px;
+  }
+
+  #photo {
+    width: 190px;
+    height: 190px;
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <div id="home">
 
-  <h1>ATS – AJMAN</h1>
+  <div class="title">
+    ATS – AJMAN
+  </div>
 
   <div class="subtitle">
     Private Car Exit Verification
   </div>
 
-  <div class="gate">
+
+  <div class="gateArea">
+
     Gate:
 
     <select id="gate">
-      <option value="Gate 1">Gate 1</option>
-      <option value="Gate 2">Gate 2</option>
+
+      <option value="Gate 1">
+        Gate 1
+      </option>
+
+      <option value="Gate 2">
+        Gate 2
+      </option>
+
     </select>
+
   </div>
 
-  <button id="startButton" onclick="startCamera()">
+
+  <button
+    id="startButton"
+    onclick="startCamera()">
+
     📷 START CAMERA
+
   </button>
 
+
   <div id="message">
-    Tap START CAMERA to begin scanning
+
+    Tap START CAMERA
+
   </div>
 
-  <div id="reader"></div>
+
+  <div id="cameraContainer">
+
+    <div id="reader"></div>
+
+  </div>
+
 
   <div id="manualArea">
 
-    <input id="studentID"
-           inputmode="numeric"
-           placeholder="Student ID">
+    <input
+      id="studentID"
+      type="text"
+      inputmode="numeric"
+      autocomplete="off"
+      placeholder="Student ID">
 
-    <button class="check" onclick="manualCheck()">
+
+    <button
+      id="checkButton"
+      onclick="manualCheck()">
+
       CHECK
+
     </button>
 
   </div>
@@ -200,52 +386,116 @@
 </div>
 
 
+
+<!-- RESULT -->
+
 <div id="result">
 
-  <img id="photo">
+
+  <img
+    id="photo"
+    alt="Student Photo">
+
 
   <div id="resultTitle"></div>
 
+
   <div id="studentName"></div>
+
 
   <div id="details"></div>
 
-  <button id="next" onclick="resetSystem()">
+
+  <button
+    id="nextButton"
+    onclick="resetSystem()">
+
     NEXT STUDENT
+
   </button>
+
+
+  <div id="countdown"></div>
 
 </div>
 
 
+
 <script>
 
-/* ==========================================
-   IMPORTANT SETTINGS
-========================================== */
+/* ========================================
+   SETTINGS
+======================================== */
+
+
+/*
+  Use your EXISTING Apps Script /exec URL
+*/
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwjnfAjtmlrLK9i-n9dnelQWO5mmZvbnCdSN6-p22RXl9JCglr0ERvJKt4lsoSw3aCXOg/exec";
+
+
+/*
+  Use the SAME API key from Code.gs
+*/
 
 const API_KEY =
   "AJM-PC-8kR92xM4-2026-X7Q";
 
 
+/*
+  2 seconds = fast gate operation.
+*/
+
+const RESULT_SECONDS = 2;
+
+
 let qrScanner = null;
+
+let cameraStarted = false;
+
 let processing = false;
-let timer = null;
+
+let resetTimer = null;
+
+let countdownTimer = null;
 
 
-/* ==========================================
-   START CAMERA
-========================================== */
+/*
+  Prevent the exact same QR from firing
+  repeatedly while still in camera view.
+*/
+
+let lastScannedID = "";
+
+let lastScanTime = 0;
+
+
+
+/* ========================================
+   CAMERA
+======================================== */
 
 async function startCamera() {
 
+
+  if (cameraStarted) {
+    return;
+  }
+
+
   const button =
-    document.getElementById("startButton");
+    document.getElementById(
+      "startButton"
+    );
+
 
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
+
 
   button.disabled = true;
 
@@ -255,109 +505,327 @@ async function startCamera() {
 
   try {
 
+
     qrScanner =
-      new Html5Qrcode("reader");
+      new Html5Qrcode(
+        "reader"
+      );
+
+
+    /*
+      Get available cameras.
+    */
+
+    const cameras =
+      await Html5Qrcode.getCameras();
+
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
+      throw new Error(
+        "No camera found."
+      );
+    }
+
+
+    /*
+      On iPad we prefer the rear camera.
+      Usually the last camera is rear.
+    */
+
+    let cameraId =
+      cameras[cameras.length - 1].id;
+
+
+    /*
+      Try to identify rear/back/environment
+      camera by label.
+    */
+
+    for (
+      let i = 0;
+      i < cameras.length;
+      i++
+    ) {
+
+      const label =
+        String(
+          cameras[i].label || ""
+        ).toLowerCase();
+
+
+      if (
+        label.includes("back") ||
+        label.includes("rear") ||
+        label.includes("environment")
+      ) {
+
+        cameraId =
+          cameras[i].id;
+
+        break;
+      }
+
+    }
 
 
     await qrScanner.start(
 
-      {
-        facingMode: "environment"
-      },
+      cameraId,
 
       {
-        fps: 12,
 
-        qrbox: {
-          width: 280,
-          height: 280
-        }
+        /*
+          Faster QR detection
+        */
+
+        fps: 20,
+
+
+        /*
+          Large scan area.
+        */
+
+        qrbox:
+          function(
+            width,
+            height
+          ) {
+
+            const size =
+              Math.floor(
+                Math.min(
+                  width,
+                  height
+                ) * 0.85
+              );
+
+
+            return {
+
+              width: size,
+              height: size
+
+            };
+
+          },
+
+
+        /*
+          Helpful on mobile.
+        */
+
+        aspectRatio: 1.0,
+
+        disableFlip: true
+
       },
+
 
       qrSuccess,
 
+
       function() {
-        // Ignore normal scanning errors
+
+        /*
+          Ignore normal
+          "QR not found" frames.
+        */
+
       }
 
     );
 
 
+    cameraStarted = true;
+
+
     button.style.display =
       "none";
 
+
     message.textContent =
-      "Ready — scan student QR code";
+      "READY — Scan QR";
 
 
-  } catch(error) {
+  }
+
+  catch(error) {
+
 
     console.error(error);
 
-    button.disabled = false;
+
+    button.disabled =
+      false;
+
 
     button.textContent =
       "📷 TRY CAMERA AGAIN";
 
+
     message.innerHTML =
-      "<b>Unable to open camera.</b><br>" +
-      error.message;
+      "<b>Camera Error</b><br>" +
+      safe(error.message);
 
   }
 
 }
 
 
-/* ==========================================
-   QR DETECTED
-========================================== */
 
-function qrSuccess(decodedText) {
+/* ========================================
+   QR SUCCESS
+======================================== */
 
-  if (processing) return;
+function qrSuccess(
+  decodedText
+) {
 
-  const id =
+
+  if (processing) {
+    return;
+  }
+
+
+  let studentId =
     String(decodedText)
-      .trim()
+      .trim();
+
+
+  /*
+    QR should contain Student ID.
+  */
+
+  studentId =
+    studentId
       .split(/\s+/)[0];
 
-  if (!id) return;
+
+  if (!studentId) {
+    return;
+  }
+
+
+  /*
+    Stop the same QR repeatedly firing
+    within 3 seconds.
+  */
+
+  const now =
+    Date.now();
+
+
+  if (
+    studentId === lastScannedID &&
+    now - lastScanTime < 3000
+  ) {
+
+    return;
+  }
+
+
+  lastScannedID =
+    studentId;
+
+
+  lastScanTime =
+    now;
+
 
   processing = true;
 
-  checkStudent(id);
+
+  /*
+    Show immediate feedback BEFORE
+    waiting for Google.
+  */
+
+  document
+    .getElementById("message")
+    .textContent =
+    "Checking " +
+    studentId +
+    "...";
+
+
+  checkStudent(
+    studentId
+  );
 
 }
 
 
-/* ==========================================
-   MANUAL TEST
-========================================== */
+
+/* ========================================
+   MANUAL
+======================================== */
 
 function manualCheck() {
 
-  if (processing) return;
 
-  const id =
-    document
-      .getElementById("studentID")
-      .value
-      .trim();
+  if (processing) {
+    return;
+  }
 
-  if (!id) return;
+
+  const input =
+    document.getElementById(
+      "studentID"
+    );
+
+
+  const studentId =
+    input.value.trim();
+
+
+  if (!studentId) {
+    return;
+  }
+
 
   processing = true;
 
-  checkStudent(id);
+
+  checkStudent(
+    studentId
+  );
 
 }
 
 
-/* ==========================================
-   CHECK STUDENT
-========================================== */
+document
+  .getElementById("studentID")
+  .addEventListener(
+    "keydown",
+    function(event) {
 
-async function checkStudent(studentId) {
+
+      if (
+        event.key ===
+        "Enter"
+      ) {
+
+        manualCheck();
+
+      }
+
+    }
+  );
+
+
+
+/* ========================================
+   API
+======================================== */
+
+async function checkStudent(
+  studentId
+) {
+
 
   const gate =
     document
@@ -365,32 +833,51 @@ async function checkStudent(studentId) {
       .value;
 
 
-  document.getElementById("message")
-    .textContent =
-    "Checking student...";
-
-
   const url =
+
     API_URL +
+
     "?action=check" +
+
     "&studentId=" +
-    encodeURIComponent(studentId) +
+    encodeURIComponent(
+      studentId
+    ) +
+
     "&gate=" +
-    encodeURIComponent(gate) +
+    encodeURIComponent(
+      gate
+    ) +
+
     "&key=" +
-    encodeURIComponent(API_KEY);
+    encodeURIComponent(
+      API_KEY
+    ) +
+
+    /*
+      Prevent browser caching.
+    */
+
+    "&t=" +
+    Date.now();
 
 
   try {
 
+
     const response =
-      await fetch(url);
+      await fetch(
+        url,
+        {
+          cache: "no-store"
+        }
+      );
 
 
     if (!response.ok) {
 
       throw new Error(
-        "Server response: " +
+        "Server " +
         response.status
       );
 
@@ -401,247 +888,505 @@ async function checkStudent(studentId) {
       await response.json();
 
 
-    showResult(data);
+    showResult(
+      data
+    );
 
+  }
 
-  } catch(error) {
+  catch(error) {
+
 
     console.error(error);
 
-    document.getElementById("message")
-      .innerHTML =
-      "<b>Connection Error</b><br>" +
-      error.message;
 
-    processing = false;
+    document
+      .getElementById("message")
+      .innerHTML =
+
+      "<b>Connection Error</b><br>" +
+
+      safe(
+        error.message
+      );
+
+
+    processing =
+      false;
 
   }
 
 }
 
 
-/* ==========================================
-   SHOW RESULT
-========================================== */
+
+/* ========================================
+   RESULT
+======================================== */
 
 function showResult(data) {
 
+
   const result =
-    document.getElementById("result");
+    document.getElementById(
+      "result"
+    );
+
 
   const title =
-    document.getElementById("resultTitle");
+    document.getElementById(
+      "resultTitle"
+    );
+
 
   const name =
-    document.getElementById("studentName");
+    document.getElementById(
+      "studentName"
+    );
+
 
   const details =
-    document.getElementById("details");
+    document.getElementById(
+      "details"
+    );
+
 
   const photo =
-    document.getElementById("photo");
+    document.getElementById(
+      "photo"
+    );
 
 
-  result.className = "";
+  result.className =
+    "";
 
-  photo.style.display = "none";
 
+  photo.style.display =
+    "none";
+
+
+  photo.removeAttribute(
+    "src"
+  );
+
+
+  /*
+    Start photo loading immediately.
+  */
 
   if (
     data.student &&
     data.student.photo
   ) {
 
+
+    photo.onload =
+      function() {
+
+        photo.style.display =
+          "block";
+
+      };
+
+
     photo.src =
       data.student.photo;
 
-    photo.style.display =
-      "block";
   }
 
 
-  /* GREEN */
 
-  if (data.status === "ALLOWED") {
+  /* ======================================
+     GREEN
+  ====================================== */
 
-    result.classList.add("allowed");
+  if (
+    data.status ===
+    "ALLOWED"
+  ) {
+
+
+    result.classList.add(
+      "allowed"
+    );
+
 
     title.textContent =
       "✓ EXIT ALLOWED";
 
+
     name.textContent =
       data.student.name;
+
 
     details.innerHTML =
 
       "Student ID: " +
-      safe(data.student.id) +
-
-      "<br>Class: " +
-      safe(data.student.className) +
-
-      "<br>School: " +
-      safe(data.student.school) +
-
-      '<div class="status">' +
-      "🚗 PRIVATE CAR" +
-      "</div>" +
-
-      "<br>Exit Time: " +
-      safe(data.exitTime) +
+      safe(
+        data.student.id
+      ) +
 
       "<br>" +
-      safe(data.gate);
+
+      "Class: " +
+      safe(
+        data.student.className
+      ) +
+
+      "<br>" +
+
+      "School: " +
+      safe(
+        data.student.school
+      ) +
+
+      '<div class="bigStatus">' +
+
+      "🚗 PRIVATE CAR" +
+
+      "</div>" +
+
+      "Exit: " +
+      safe(
+        data.exitTime
+      ) +
+
+      " — " +
+
+      safe(
+        data.gate
+      );
 
   }
 
 
-  /* RED */
 
-  else if (data.status === "BUS") {
+  /* ======================================
+     RED
+  ====================================== */
 
-    result.classList.add("bus");
+  else if (
+    data.status ===
+    "BUS"
+  ) {
+
+
+    result.classList.add(
+      "bus"
+    );
+
 
     title.textContent =
       "✕ BUS STUDENT";
 
+
     name.textContent =
       data.student.name;
+
 
     details.innerHTML =
 
       "Student ID: " +
-      safe(data.student.id) +
+      safe(
+        data.student.id
+      ) +
 
-      "<br>Class: " +
-      safe(data.student.className) +
+      "<br>" +
 
-      "<br>School: " +
-      safe(data.student.school) +
+      "Class: " +
+      safe(
+        data.student.className
+      ) +
 
-      '<div class="status">' +
+      "<br>" +
+
+      "School: " +
+      safe(
+        data.student.school
+      ) +
+
+      '<div class="bigStatus">' +
+
       "🚌 EXIT NOT ALLOWED" +
+
       "</div>";
 
   }
 
 
-  /* ORANGE */
+
+  /* ======================================
+     ORANGE
+  ====================================== */
 
   else if (
-    data.status === "ALREADY_USED"
+    data.status ===
+    "ALREADY_USED"
   ) {
 
-    result.classList.add("duplicate");
+
+    result.classList.add(
+      "duplicate"
+    );
+
 
     title.textContent =
       "⚠ ALREADY EXITED";
 
+
     name.textContent =
       data.student.name;
+
 
     details.innerHTML =
 
       "Student ID: " +
-      safe(data.student.id) +
-
-      "<br>Class: " +
-      safe(data.student.className) +
-
-      "<br><br>Previous Exit: <b>" +
-      safe(data.previousTime) +
-      "</b>" +
+      safe(
+        data.student.id
+      ) +
 
       "<br>" +
-      safe(data.previousGate);
+
+      "Class: " +
+      safe(
+        data.student.className
+      ) +
+
+      '<div class="bigStatus">' +
+
+      "Previous Exit: " +
+
+      safe(
+        data.previousTime
+      ) +
+
+      "</div>" +
+
+      safe(
+        data.previousGate
+      );
 
   }
 
 
-  /* NOT FOUND */
+
+  /* ======================================
+     UNKNOWN
+  ====================================== */
 
   else {
 
-    result.classList.add("unknown");
+
+    result.classList.add(
+      "unknown"
+    );
+
 
     title.textContent =
       "STUDENT NOT FOUND";
 
+
     name.textContent =
       data.id || "";
 
+
     details.innerHTML =
-      '<div class="status">' +
-      "Please check Student ID" +
+
+      '<div class="bigStatus">' +
+
+      "CHECK STUDENT ID" +
+
       "</div>";
 
   }
 
+
+
+  /*
+    Show status immediately.
+  */
 
   result.style.display =
     "flex";
 
 
-  /*
-    Automatically return after
-    5 seconds.
-  */
+  startCountdown();
 
-  clearTimeout(timer);
+}
 
-  timer =
+
+
+/* ========================================
+   FAST RESET
+======================================== */
+
+function startCountdown() {
+
+
+  clearTimeout(
+    resetTimer
+  );
+
+
+  clearInterval(
+    countdownTimer
+  );
+
+
+  let seconds =
+    RESULT_SECONDS;
+
+
+  const countdown =
+    document.getElementById(
+      "countdown"
+    );
+
+
+  countdown.textContent =
+    "Next student in " +
+    seconds;
+
+
+  countdownTimer =
+    setInterval(
+      function() {
+
+
+        seconds--;
+
+
+        if (
+          seconds > 0
+        ) {
+
+
+          countdown.textContent =
+            "Next student in " +
+            seconds;
+
+
+        }
+
+        else {
+
+
+          clearInterval(
+            countdownTimer
+          );
+
+
+          countdown.textContent =
+            "";
+
+        }
+
+      },
+
+      1000
+    );
+
+
+  resetTimer =
     setTimeout(
       resetSystem,
-      5000
+      RESULT_SECONDS *
+      1000
     );
 
 }
 
 
-/* ==========================================
-   RESET
-========================================== */
+
+/* ========================================
+   READY FOR NEXT STUDENT
+======================================== */
 
 function resetSystem() {
 
-  clearTimeout(timer);
 
-  document.getElementById("result")
+  clearTimeout(
+    resetTimer
+  );
+
+
+  clearInterval(
+    countdownTimer
+  );
+
+
+  document
+    .getElementById("result")
     .style.display =
     "none";
 
-  document.getElementById("studentID")
+
+  document
+    .getElementById("studentID")
     .value =
     "";
 
-  document.getElementById("message")
-    .textContent =
-    "Ready — scan student QR code";
 
-  processing = false;
+  document
+    .getElementById("message")
+    .textContent =
+    "READY — Scan QR";
+
+
+  /*
+    Camera NEVER stopped.
+    Immediately ready for next QR.
+  */
+
+  processing =
+    false;
 
 }
 
 
-/* ==========================================
-   SAFE TEXT
-========================================== */
+
+/* ========================================
+   SAFE HTML
+======================================== */
 
 function safe(value) {
 
+
   return String(
-    value == null ? "" : value
+    value == null
+      ? ""
+      : value
   )
 
-  .replace(/&/g, "&amp;")
-  .replace(/</g, "&lt;")
-  .replace(/>/g, "&gt;")
-  .replace(/"/g, "&quot;")
-  .replace(/'/g, "&#039;");
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
 </script>
 
 </body>
+
 </html>
